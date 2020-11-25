@@ -2,10 +2,9 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 const jwt = require('express-jwt');
-const cors = require('cors');
 require('dotenv').config();
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 const app = express();
 
 const jwtSecret = process.env.JWT_SECRET_KEY;
@@ -23,8 +22,7 @@ const isTokenRevokedCallback = (req, payload, done) => {
 
 const corsOptions = {
   origin: [
-    'http://localhost:3000',
-
+    process.env.ALLOWED_ORIGIN,
   ],
   allowedHeaders: [
     'Content-Type',
@@ -45,8 +43,8 @@ app.use(jwt({
 
 const gateway = new ApolloGateway({
   serviceList: [
-    { name: 'User', url: 'http://localhost:5000/graphql' },
-    { name: 'Invoicing', url: 'http://localhost:5001/graphql' },
+    { name: 'User', url: process.env.USER_SERVICE_ADDR },
+    // { name: 'Invoicing', url: process.env.INVOICING_SERVICE_ADDR },
   ],
   buildService({ url }) {
     return new RemoteGraphQLDataSource({
