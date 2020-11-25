@@ -17,7 +17,7 @@ pool:
 variables:
   tag: "$(Build.BuildNumber)"
   repository: "kiwisheets/gateway"
-  isMain: $[in(variables['Build.SourceBranch'], 'refs/heads/master')]
+  isMain: $[in(variables['Build.SourceBranch'], 'refs/heads/main')]
 
 stages:
   - stage: Test
