@@ -32,6 +32,7 @@ stages:
               command: 'ci'
           - bash: CI=true npm test
             displayName: Jest Test
+            enabled: false
 
   - stage: Build
     displayName: Build image
