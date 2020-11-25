@@ -7,4 +7,4 @@ RUN npm install --silent
 
 COPY . /usr/src/app
 
-CMD ["node" "index.js"]
+CMD ["index.js"]
