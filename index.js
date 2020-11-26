@@ -39,6 +39,11 @@ app.use(jwt({
   isRevoked: isTokenRevokedCallback,
 }));
 
+app.get('/health', (req, res) => {
+  res.status(200);
+  res.end();
+});
+
 const gateway = new ApolloGateway({
   serviceList: [
     { name: 'User', url: process.env.USER_SERVICE_ADDR },

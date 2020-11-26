@@ -76,7 +76,7 @@ job "gateway" {
 
       check {
         type     = "http"
-        path     = "/graphql"
+        path     = "/health"
         interval = "2s"
         timeout  = "2s"
       }
