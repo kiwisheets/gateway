@@ -2,7 +2,7 @@ job "gateway" {
   datacenters = ["${datacenter}"]
 
   group "gateway" {
-    count = 1
+    count = ${instances}
 
     task "gateway" {
       driver = "docker"

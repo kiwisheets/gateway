@@ -38,7 +38,7 @@ resource "nomad_job" "gateway" {
     datacenter     = var.datacenter
     image_tag      = var.image_tag
     allowed_origin = var.allowed_origin
-    instance       = var.instance_count
+    instance_count = var.instance_count
     host           = var.host
   })
   detach = false
