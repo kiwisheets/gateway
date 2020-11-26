@@ -30,6 +30,7 @@ const corsOptions = {
   ],
   optionsSuccessStatus: 200,
   credentials: true,
+  maxAge: 600,
 };
 
 app.use(jwt({
