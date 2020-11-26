@@ -4,14 +4,12 @@ const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 const jwt = require('express-jwt');
 require('dotenv').config();
 
+const { getSecretFromEnv } = require('./secret.js');
+
 const port = process.env.PORT || 4000;
 const app = express();
 
-const jwtSecret = process.env.JWT_SECRET_KEY;
-if (jwtSecret === undefined || jwtSecret === null || jwtSecret === '') {
-  console.error('ENV JWT_SECRET_KEY not defined');
-  process.exit(1);
-}
+const jwtSecret = getSecretFromEnv('JWT_SECRET_KEY');
 
 const isTokenRevokedCallback = (req, payload, done) => {
   const issuer = payload.iss;
