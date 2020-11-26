@@ -20,7 +20,7 @@ job "gateway" {
         PORT = 4000
         ENVIRONMENT = "production"
         JWT_SECRET_KEY_FILE = "/run/secrets/jwt-secret-key.secret"
-        USER_SERVICE_ADDR = "$${NOMAD_UPSTREAM_ADDR_gql-server}/graphql"
+        USER_SERVICE_ADDR = "http://$${NOMAD_UPSTREAM_ADDR_gql-server}/graphql"
       }
 
       template {
