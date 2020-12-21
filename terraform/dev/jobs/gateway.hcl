@@ -79,6 +79,7 @@ job "gateway" {
       check {
         type     = "http"
         path     = "/health"
+        port     = "health"
         interval = "2s"
         timeout  = "2s"
       }
