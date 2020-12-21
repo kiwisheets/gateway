@@ -11,7 +11,7 @@ job "gateway" {
         image = "kiwisheets/gateway:${image_tag}"
 
         volumes = [
-          "secrets/jwt-secret-key.secret:/run/secrets/jwt-secret-key.secret"
+          "secrets/jwt-public-key.secret:/run/secrets/jwt-public-key.secret"
         ]
       }
 
@@ -19,15 +19,16 @@ job "gateway" {
         ALLOWED_ORIGIN = "${allowed_origin}"
         PORT = 4000
         ENVIRONMENT = "production"
-        JWT_SECRET_KEY_FILE = "/run/secrets/jwt-secret-key.secret"
+        JWT_EC_PUBLIC_KEY_FILE = "/run/secrets/jwt-public-key.secret"
         USER_SERVICE_ADDR = "http://$${NOMAD_UPSTREAM_ADDR_gql-server}/graphql"
       }
 
       template {
         data = <<EOF
-{{with secret "secret/data/gql-server"}}{{.Data.data.jwt_secret}}{{end}}
+{{with secret "secret/data/jwt-public"}}{{.Data.data.key}}{{end}}
         EOF
-        destination = "secrets/jwt-secret-key.secret"
+        destination = "secrets/jwt-public-key.secret"
+        change_mode = "restart"
       }
 
       vault {

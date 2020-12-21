@@ -24,10 +24,10 @@ resource "vault_policy" "gateway" {
   name = "gateway"
 
   policy = <<EOT
-path "secret/gql-server" {
+path "secret/jwt-public" {
   capabilities = ["read"]
 }
-path "secret/data/gql-server" {
+path "secret/data/jwt-public" {
   capabilities = ["read"]
 }
 EOT

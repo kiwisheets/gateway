@@ -4,12 +4,15 @@ const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 const jwt = require('express-jwt');
 require('dotenv').config();
 
-const { getSecretFromEnv } = require('./secret.js');
+const { getSecretFromEnv, canGetEnv } = require('./secret.js');
+
+const env = canGetEnv('ENVIRONMENT', 'production');
+const development = env === 'development';
 
 const port = process.env.PORT || 4000;
 const app = express();
 
-const jwtSecret = getSecretFromEnv('JWT_SECRET_KEY');
+const jwtPublicKey = getSecretFromEnv('JWT_EC_PUBLIC_KEY');
 
 const isTokenRevokedCallback = (req, payload, done) => {
   const issuer = payload.iss;
@@ -34,9 +37,9 @@ const corsOptions = {
 };
 
 app.use(jwt({
-  secret: jwtSecret,
+  secret: jwtPublicKey,
   credentialsRequired: false,
-  algorithms: ['HS384'],
+  algorithms: ['ES256'],
   isRevoked: isTokenRevokedCallback,
 }));
 
@@ -55,6 +58,7 @@ const gateway = new ApolloGateway({
       url,
       apq: true,
       willSendRequest({ request, context }) {
+        console.log('request received');
         request.http.headers.set(
           'Authorization',
           context.token,
@@ -76,6 +80,8 @@ const gateway = new ApolloGateway({
     executor,
     tracing: true,
     subscriptions: false,
+    playground: development,
+    introspection: development,
     context: ({ req }) => {
       const token = req.headers.authorization || '';
       const { user } = req;
