@@ -43,26 +43,27 @@ job "gateway" {
 
     network {
       mode = "bridge"
-      port "http" {
-        to = "4000"
-      }
+      port "health" {}
     }
 
     service {
       name = "gateway"
-      port = "http"
-
-      tags = [
-        "traefik.enable=true",
-        "traefik.http.routers.gateway.rule=Host(`${host}`) && PathPrefix(`/graphql`)",
-      ]
+      port = 4000
 
       connect {
         sidecar_service {
           proxy {
             upstreams {
               destination_name = "gql-server"
-              local_bind_port = 5000
+              local_bind_port  = 5000
+            }
+            expose {
+              path {
+                path           = "/health"
+                protocol        = "http"
+                local_path_port = 4000
+                listener_port   = "health"
+              }
             }
           }
         }
