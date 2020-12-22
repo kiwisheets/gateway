@@ -58,7 +58,6 @@ const gateway = new ApolloGateway({
       url,
       apq: true,
       willSendRequest({ request, context }) {
-        console.log('request received');
         request.http.headers.set(
           'Authorization',
           context.token,
