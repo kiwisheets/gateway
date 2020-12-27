@@ -13,7 +13,7 @@ const port = process.env.PORT || 4000;
 const app = express();
 
 const jwtPublicKey = getSecretFromEnv('JWT_EC_PUBLIC_KEY');
-const apolloKey = getSecretFromEnv('APOLLO_KEY').toString();
+process.env.APOLLO_KEY = getSecretFromEnv('APOLLO_KEY').toString();
 
 const isTokenRevokedCallback = (req, payload, done) => {
   const issuer = payload.iss;
@@ -71,9 +71,6 @@ const gateway = new ApolloGateway({
 (async () => {
   const server = new ApolloServer({
     gateway,
-    apollo: {
-      key: apolloKey,
-    },
     tracing: true,
     subscriptions: false,
     playground: development,
