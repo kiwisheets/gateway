@@ -22,7 +22,7 @@ job "gateway" {
         ENVIRONMENT = "production"
         JWT_EC_PUBLIC_KEY_FILE = "/run/secrets/jwt-public-key.secret"
         APOLLO_KEY_FILE="/run/secrets/apollo-key.secret"
-        APOLLO_GRAPH_VARIANT="prod"
+        APOLLO_GRAPH_VARIANT="${apollo_graph_variant}"
       }
 
       template {

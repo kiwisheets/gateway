@@ -31,3 +31,8 @@ variable "apollo_key" {
   type        = string
   description = "Apollo Key"
 }
+
+variable "apollo_graph_variant" {
+  type        = string
+  description = "Apollo Graph Variant"
+}

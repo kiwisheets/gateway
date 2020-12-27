@@ -11,3 +11,5 @@ allowed_origin = "#{ALLOWED_ORIGIN}#"
 host = "#{HOST}#"
 
 apollo_key = "#{APOLLO_KEY}#"
+
+apollo_graph_variant = "#{APOLLO_VARIANT}#"

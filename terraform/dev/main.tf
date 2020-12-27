@@ -61,11 +61,12 @@ resource "consul_intention" "invoicing" {
 
 resource "nomad_job" "gateway" {
   jobspec = templatefile("${path.module}/jobs/gateway.hcl", {
-    datacenter     = var.datacenter
-    image_tag      = var.image_tag
-    allowed_origin = var.allowed_origin
-    instance_count = var.instance_count
-    host           = var.host
+    datacenter           = var.datacenter
+    image_tag            = var.image_tag
+    allowed_origin       = var.allowed_origin
+    instance_count       = var.instance_count
+    host                 = var.host
+    apollo_graph_variant = var.apollo_graph_variant
   })
   detach = false
 }
