@@ -13,7 +13,7 @@ const port = process.env.PORT || 4000;
 const app = express();
 
 const jwtPublicKey = getSecretFromEnv('JWT_EC_PUBLIC_KEY');
-const apolloKey = getSecretFromEnv('APOLLO_KEY');
+const apolloKey = getSecretFromEnv('APOLLO_KEY').toString();
 
 const isTokenRevokedCallback = (req, payload, done) => {
   const issuer = payload.iss;
