@@ -26,17 +26,13 @@ job "gateway" {
       }
 
       template {
-        data = <<EOF
-{{with secret "secret/data/jwt-public"}}{{.Data.data.key}}{{end}}
-        EOF
+        data = "{{with secret \"secret/data/jwt-public\"}}{{.Data.data.key}}{{end}}"
         destination = "secrets/jwt-public-key.secret"
         change_mode = "restart"
       }
 
       template {
-        data = <<EOF
-{{with secret "secret/data/apollo"}}{{.Data.data.key}}{{end}}
-        EOF
+        data = "{{with secret \"secret/data/apollo\"}}{{.Data.data.key}}{{end}}"
         destination = "secrets/apollo-key.secret"
         change_mode = "restart"
       }
