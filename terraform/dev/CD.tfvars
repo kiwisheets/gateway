@@ -9,3 +9,5 @@ instance_count = "#{INSTANCE_COUNT}#"
 allowed_origin = "#{ALLOWED_ORIGIN}#"
 
 host = "#{HOST}#"
+
+apollo_key = "#{APOLLO_KEY}#"

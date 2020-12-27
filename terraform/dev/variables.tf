@@ -26,3 +26,8 @@ variable "host" {
   type        = string
   description = "API host"
 }
+
+variable "apollo_key" {
+  type        = string
+  description = "Apollo Key"
+}

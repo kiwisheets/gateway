@@ -20,7 +20,8 @@ job "gateway" {
         PORT = 4000
         ENVIRONMENT = "production"
         JWT_EC_PUBLIC_KEY_FILE = "/run/secrets/jwt-public-key.secret"
-        USER_SERVICE_ADDR = "http://$${NOMAD_UPSTREAM_ADDR_gql-server}/graphql"
+        APOLLO_KEY_FILE="/run/secrets/apollo-key.secret"
+        APOLLO_GRAPH_VARIANT="prod"
       }
 
       template {
@@ -28,6 +29,14 @@ job "gateway" {
 {{with secret "secret/data/jwt-public"}}{{.Data.data.key}}{{end}}
         EOF
         destination = "secrets/jwt-public-key.secret"
+        change_mode = "restart"
+      }
+
+      template {
+        data = <<EOF
+{{with secret "secret/data/apollo"}}{{.Data.data.key}}{{end}}
+        EOF
+        destination = "secrets/apollo-key.secret"
         change_mode = "restart"
       }
 
@@ -56,6 +65,10 @@ job "gateway" {
             upstreams {
               destination_name = "gql-server"
               local_bind_port  = 5000
+            }
+            upstreams {
+              destination_name = "invoicing"
+              local_bind_port  = 5001
             }
             expose {
               path {

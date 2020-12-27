@@ -13,6 +13,7 @@ const port = process.env.PORT || 4000;
 const app = express();
 
 const jwtPublicKey = getSecretFromEnv('JWT_EC_PUBLIC_KEY');
+const apolloKey = getSecretFromEnv('APOLLO_KEY');
 
 const isTokenRevokedCallback = (req, payload, done) => {
   const issuer = payload.iss;
@@ -49,10 +50,6 @@ app.get('/health', (req, res) => {
 });
 
 const gateway = new ApolloGateway({
-  serviceList: [
-    { name: 'User', url: process.env.USER_SERVICE_ADDR },
-    // { name: 'Invoicing', url: process.env.INVOICING_SERVICE_ADDR },
-  ],
   buildService({ url }) {
     return new RemoteGraphQLDataSource({
       url,
@@ -72,11 +69,11 @@ const gateway = new ApolloGateway({
 });
 
 (async () => {
-  const { schema, executor } = await gateway.load();
-
   const server = new ApolloServer({
-    schema,
-    executor,
+    gateway,
+    apollo: {
+      key: apolloKey,
+    },
     tracing: true,
     subscriptions: false,
     playground: development,

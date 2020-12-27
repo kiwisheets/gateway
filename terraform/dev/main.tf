@@ -20,6 +20,14 @@ provider "consul" {
 
 provider "vault" {}
 
+resource "vault_generic_secret" "apollo" {
+  path = "secret/apollo"
+
+  data_json = jsonencode({
+    key = var.apollo_key
+  })
+}
+
 resource "vault_policy" "gateway" {
   name = "gateway"
 
@@ -30,7 +38,25 @@ path "secret/jwt-public" {
 path "secret/data/jwt-public" {
   capabilities = ["read"]
 }
+path "secret/apollo" {
+  capabilities = ["read"]
+}
+path "secret/data/apollo" {
+  capabilities = ["read"]
+}
 EOT
+}
+
+resource "consul_intention" "gql_server" {
+  source_name      = "gateway"
+  destination_name = "gql-server"
+  action           = "allow"
+}
+
+resource "consul_intention" "invoicing" {
+  source_name      = "gateway"
+  destination_name = "invoicing"
+  action           = "allow"
 }
 
 resource "nomad_job" "gateway" {
