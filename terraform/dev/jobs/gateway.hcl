@@ -11,7 +11,8 @@ job "gateway" {
         image = "kiwisheets/gateway:${image_tag}"
 
         volumes = [
-          "secrets/jwt-public-key.secret:/run/secrets/jwt-public-key.secret"
+          "secrets/jwt-public-key.secret:/run/secrets/jwt-public-key.secret",
+          "secrets/apollo-key.secret:/run/secrets/apollo-key.secret"
         ]
       }
 
