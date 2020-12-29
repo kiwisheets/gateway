@@ -43,7 +43,7 @@ job "gateway" {
 
       resources {
         cpu    = 64
-        memory = 64
+        memory = 128
       }
     }
 

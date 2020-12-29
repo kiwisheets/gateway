@@ -22,10 +22,10 @@ const isTokenRevokedCallback = (req, payload, done) => {
   return done(null);
 };
 
+const origins = process.env.ALLOWED_ORIGIN.split(/[\s,]+/);
+
 const corsOptions = {
-  origin: [
-    process.env.ALLOWED_ORIGIN,
-  ],
+  origin: origins,
   allowedHeaders: [
     'Content-Type',
     'Authorization',
