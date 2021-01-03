@@ -59,6 +59,7 @@ const gateway = new ApolloGateway({
           'Authorization',
           context.token,
         );
+        console.log(JSON.stringify(context.user));
         request.http.headers.set(
           'User',
           JSON.stringify(context.user),
