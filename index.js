@@ -9,6 +9,8 @@ const { getSecretFromEnv, canGetEnv } = require('./secret.js');
 const env = canGetEnv('ENVIRONMENT', 'production');
 const development = env === 'development';
 
+const introspectionEnabled = canGetEnv('INTROSPECT', true);
+
 const port = process.env.PORT || 4000;
 const app = express();
 
@@ -77,7 +79,7 @@ const gateway = new ApolloGateway({
     tracing: true,
     subscriptions: false,
     playground: development,
-    introspection: development,
+    introspection: introspectionEnabled,
     context: ({ req }) => {
       const token = req.headers.authorization || '';
       const { user } = req;
