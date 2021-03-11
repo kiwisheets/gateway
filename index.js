@@ -24,7 +24,7 @@ const isTokenRevokedCallback = (req, payload, done) => {
   return done(null);
 };
 
-const origins = process.env.ALLOWED_ORIGIN.split(/[\s,]+/);
+const origins = process.env.ALLOWED_ORIGIN.split(/[\s,]+/).map((origin) => new RegExp(origin));
 
 const corsOptions = {
   origin: origins,
