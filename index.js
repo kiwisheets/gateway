@@ -24,7 +24,10 @@ const isTokenRevokedCallback = (req, payload, done) => {
   return done(null);
 };
 
-const origins = process.env.ALLOWED_ORIGIN.split(/[\s,]+/).map((origin) => new RegExp(origin));
+const origins = process.env.ALLOWED_ORIGIN.split(/[\s,]+/);
+const regexpOrigins = process.env.ALLOWED_ORIGIN_REGEXP.split(/[\s,]+/).map((origin) => new RegExp(origin));
+
+origins.concat(regexpOrigins);
 
 origins.forEach((o) => {
   console.log(o);

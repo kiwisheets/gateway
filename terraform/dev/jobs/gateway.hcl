@@ -18,6 +18,7 @@ job "gateway" {
 
       env {
         ALLOWED_ORIGIN = "${allowed_origin}"
+        ALLOWED_ORIGIN_REGEXP = "${allowed_origin_regexp}"
         PORT = 4000
         ENVIRONMENT = "production"
         INTROSPECT = true

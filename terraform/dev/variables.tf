@@ -19,7 +19,12 @@ variable "instance_count" {
 
 variable "allowed_origin" {
   type        = string
-  description = "the allowed origin for CORS"
+  description = "the allowed origins for CORS"
+}
+
+variable "allowed_origin_regexp" {
+  type        = string
+  description = "the allowed origins (regexp) for CORS"
 }
 
 variable "host" {
